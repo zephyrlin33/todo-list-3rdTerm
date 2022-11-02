@@ -11,6 +11,8 @@ router.post('/login', (req, res) => {
 router.get('/register', (req, res) => {
   res.render('register')
 })
+
+//regist function
 router.post('/register', (req, res) => {
   // 取得註冊表單參數
   const { name, email, password, confirmPassword } = req.body

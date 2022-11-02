@@ -1,6 +1,7 @@
 // 引用
 const express = require('express')
-const exphbs = require('express-handlebars');
+const exphbs = require('express-handlebars')
+const session = require('express-session')//
 const bodyParser = require('body-parser')// 引用 body-parser
 const methodOverride = require('method-override') 
 const routes = require('./routes')//引用路由器
@@ -17,8 +18,12 @@ app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(routes)
-
-
+//註冊套件session
+app.use(session({
+  secret: 'ThisIsMySecret',
+  resave: false,
+  saveUninitialized: true
+}))
 // 設定 port 3000
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)
