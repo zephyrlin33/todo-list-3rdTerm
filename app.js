@@ -19,16 +19,26 @@ app.set('view engine', 'hbs')
 // 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
-usePassport(app)
-app.use(routes)
+
 //註冊套件session
 app.use(session({
   secret: 'ThisIsMySecret',
   resave: false,
   saveUninitialized: true
 }))
-//app.use(passport.initialize())
-//app.use(passport.session())
+
+//U33
+//寫一個middleware，使每個頁面都可以使用isAuthenticated驗證機制
+app.use((req, res, next) => {
+  // 你可以在這裡 console.log(req.user) 等資訊來觀察
+  res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.user = req.user
+  next()
+})
+usePassport(app)//注意順序，一定要在session設定後
+app.use(routes)
+
+
 
 // 設定 port 3000
 app.listen(PORT, () => {
