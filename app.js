@@ -26,16 +26,21 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
+usePassport(app)//注意順序，一定要在session設定後
 
 //U33
-//寫一個middleware，使每個頁面都可以使用isAuthenticated驗證機制
+//寫一個middleware，使每個頁面(app.use)都可以使用isAuthenticated驗證機制
+//旨在把req的驗證結果交給res
+//注意在usePassport之後，因為要先把passport套件引進來
+//在routes前，因為要讓每一個頁面(app.use)都用上
+
 app.use((req, res, next) => {
   // 你可以在這裡 console.log(req.user) 等資訊來觀察
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
   next()
 })
-usePassport(app)//注意順序，一定要在session設定後
+
 app.use(routes)
 
 

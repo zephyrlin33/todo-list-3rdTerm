@@ -1,7 +1,7 @@
 const mongoose = require('mongoose') // 載入 mongoose
 
 //資料庫連線設定
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }) // 設定連線到 mongoDB
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true , useCreateIndex: true }) // 設定連線到 mongoDB
 
 const db = mongoose.connection
 // 連線異常
