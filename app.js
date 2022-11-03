@@ -7,6 +7,7 @@ const usePassport = require('./config/passport')// 載入設定檔，要寫在 e
 const bodyParser = require('body-parser')// 引用 body-parser
 const methodOverride = require('method-override') 
 const routes = require('./routes')//引用路由器
+const flash = require('connect-flash')   // 引用製作flash message套件
 
 require('./config/mongoose')//一併執行檔案
 
@@ -27,7 +28,7 @@ app.use(session({
   saveUninitialized: true
 }))
 usePassport(app)//注意順序，一定要在session設定後
-
+app.use(flash())  // 掛載connect-flash
 //U33
 //寫一個middleware，使每個頁面(app.use)都可以使用isAuthenticated驗證機制
 //旨在把req的驗證結果交給res
@@ -38,6 +39,8 @@ app.use((req, res, next) => {
   // 你可以在這裡 console.log(req.user) 等資訊來觀察
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
+  res.locals.success_msg = req.flash('success_msg')  // 設定 success_msg 訊息
+  res.locals.warning_msg = req.flash('warning_msg')  // 設定 warning_msg 訊息
   next()
 })
 
