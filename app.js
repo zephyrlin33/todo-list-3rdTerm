@@ -5,9 +5,14 @@ const session = require('express-session')//
 
 const usePassport = require('./config/passport')// 載入設定檔，要寫在 express-session 以後
 const bodyParser = require('body-parser')// 引用 body-parser
-const methodOverride = require('method-override') 
+const methodOverride = require('method-override')
 const routes = require('./routes')//引用路由器
 const flash = require('connect-flash')   // 引用製作flash message套件
+
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 require('./config/mongoose')//一併執行檔案
 
@@ -23,7 +28,7 @@ app.use(methodOverride('_method'))
 
 //註冊套件session
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))

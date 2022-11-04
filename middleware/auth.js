@@ -1,3 +1,6 @@
+
+
+//本地驗證
 module.exports = {
   //建立middleware
     authenticator: (req, res, next) => {
@@ -12,6 +15,8 @@ module.exports = {
     
 
   }
+
+
 
 //U32
 //middleware的特性，收到next()才會進入下一步
