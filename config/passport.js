@@ -1,5 +1,5 @@
 // config/passport.js
- 
+
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy//本地登入策略
 const FacebookStrategy = require('passport-facebook').Strategy//Facebook登入策略
